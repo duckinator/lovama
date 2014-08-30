@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - 2.0.0
+
+script: bundle exec rake spec
+
+notifications:
+  email:
+    on_success: change # default: change
+    on_failure: change # default: always
+
