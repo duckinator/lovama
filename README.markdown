@@ -1,6 +1,6 @@
 # Lovama
 
-TODO: Write a gem description
+lo\[cal ]va\[riable ]ma\[nipulation]: adds `local_variable_get` and `local_variable_set`.
 
 ## Installation
 
