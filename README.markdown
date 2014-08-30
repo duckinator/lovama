@@ -18,7 +18,28 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'lovama'
+
+foo = true
+
+foo #=> true
+local_variable_get(:foo) #=> true
+
+local_variable_set(:foo, false) #=> false
+
+foo #=> false
+local_variable_get(:foo) #=> false
+```
+
+## Limitations
+
+You have to declare the variable before setting it.
+
+```ruby
+foo = true # Setting it to *something* here is *required*.
+local_variable_set(:foo, false)
+```
 
 ## Contributing
 
