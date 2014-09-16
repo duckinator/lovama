@@ -28,6 +28,17 @@ module Kernel
     caller_binding.eval(variable.to_s)
   end
 
+  def local_variable_hash
+    b = caller_binding
+
+    hsh = {}
+    b.eval("local_variables").each do |k|
+      hsh[k] = b.eval(k.to_s)
+    end
+
+    hsh
+  end
+
   private
 
   def caller_binding

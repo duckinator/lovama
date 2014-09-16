@@ -48,3 +48,15 @@ describe 'local_variable_get' do
     local_variable_get(:test_variable).must_equal true
   end
 end
+
+describe 'local_variable_hash' do
+  it 'returns a hash of local variables and their values' do
+    foo = true
+    bar = false
+
+    tmp = local_variable_hash
+
+    tmp[:foo].must_equal true
+    tmp[:bar].must_equal false
+  end
+end
