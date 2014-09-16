@@ -12,6 +12,7 @@ module Kernel
     id = b.__id__
 
     variable = variable.to_s
+    b.eval(variable)
 
     $__LOVAMA_VALUES__ ||= {}
     $__LOVAMA_VALUES__[id] = value

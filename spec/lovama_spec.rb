@@ -24,6 +24,10 @@ describe 'local_variable_set' do
   end
 =end
 
+  it 'raises NameError for undefined variables' do
+    lambda { local_variable_set(:test_variable, true) }.must_raise NameError
+  end
+
   it 'redefines variables' do
     test_variable = false
 
