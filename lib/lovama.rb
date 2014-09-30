@@ -1,5 +1,5 @@
 require 'lovama/version'
-require 'debug_inspector'
+require 'spinny/utilities'
 
 module Kernel
   def local_variable_set(variable, value)
@@ -12,7 +12,7 @@ module Kernel
     variable = variable.to_s
 
     # b is the binding local_variable_set was called from. We do gross things there.
-    b  = caller_binding
+    b  = Spinny::Utilities.caller_binding
 
     # If the variable is undefined, it will raise a NameError.
     # Since it's impossible to set variables that haven't been defined before,
@@ -37,11 +37,11 @@ module Kernel
       raise TypeError, "#{variable} is not a symbol"
     end
 
-    caller_binding.eval(variable.to_s)
+    Spinny::Utilities.caller_binding.eval(variable.to_s)
   end
 
   def local_variable_hash
-    b = caller_binding
+    b = Spinny::Utilities.caller_binding
 
     hsh = {}
     b.eval("local_variables").each do |k|
@@ -49,11 +49,5 @@ module Kernel
     end
 
     hsh
-  end
-
-  private
-
-  def caller_binding
-    RubyVM::DebugInspector.open {|i| i.frame_binding(3) }
   end
 end
