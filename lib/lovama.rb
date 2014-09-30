@@ -20,8 +20,8 @@ module Kernel
     b.eval(variable)
 
     # Store the value in a variable accessible in both bindings (in a way that
-    # avoids race conditions -- hence b.__id__).
-    id = b.__id__
+    # avoids race conditions -- hence value.__id__).
+    id = value.__id__
     $__LOVAMA_VALUES__ ||= {}
     $__LOVAMA_VALUES__[id] = value
 
