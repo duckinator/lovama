@@ -8,16 +8,27 @@ module Kernel
       raise TypeError, "#{variable} is not a symbol"
     end
 
-    b  = caller_binding
-    id = b.__id__
-
+    # eval() doesn't like Symbols.
     variable = variable.to_s
+
+    # b is the binding local_variable_set was called from. We do gross things there.
+    b  = caller_binding
+
+    # If the variable is undefined, it will raise a NameError.
+    # Since it's impossible to set variables that haven't been defined before,
+    # this is a respectable alternative.
     b.eval(variable)
 
+    # Store the value in a variable accessible in both bindings (in a way that
+    # avoids race conditions -- hence b.__id__).
+    id = b.__id__
     $__LOVAMA_VALUES__ ||= {}
     $__LOVAMA_VALUES__[id] = value
 
-    b.eval("#{variable} = $__LOVAMA_VALUES__[#{id}]")
+    # Set the variable, and remove it from the global variable (to remove latent
+    # object references).
+    # This also has the value the variable is set to become the return value.
+    b.eval("#{variable} = $__LOVAMA_VALUES__.delete(#{id})")
   end
 
   def local_variable_get(variable)
